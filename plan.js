@@ -77,6 +77,8 @@ var DATA = {
 };
 
 
+var name = '<h3 class="center">' + DATA.name + '</h3>';
+$('#name').append(name);
 var ordering = '<h3 class="center">GJ Variable Ordering: ' + DATA.variableOrdering.join(', ') + '</h3><br />';
 $('#ordering').append(ordering);
 
@@ -121,14 +123,14 @@ var sink = '<div class="center stage"><b>Sink:</b> ' + DATA.sink + '</div>';
 $('#stages').append(sink);
 var arrow = '<div class="center arrow"></div>';
 var arrowWithOutput = '<div class="center arrow"><div class="output">Output: <i>(';
-var outputString = DATA.variableOrdering.join(', ') + ', ';
+var orderingArrayCopy = DATA.variableOrdering.slice();
 for (i = stageContainers.length - 1; i >= 0; --i) {
-  var finalOutput = arrowWithOutput + outputString.substring(0, outputString.length - 2) + ')</i></div></div>';
+  var finalOutput = arrowWithOutput + orderingArrayCopy.join(', ') + ')</i></div></div>';
   if (i != 0) {
     $('#stages').append(finalOutput);
   } else {
     $('#stages').append(arrow);
   }
-  outputString = outputString.substring(0, outputString.length - 3);
+  orderingArrayCopy.pop();
   $('#stages').append(stageContainers[i]);
 }
