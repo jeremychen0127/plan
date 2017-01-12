@@ -8,13 +8,13 @@ var DELTA_GRAPH = 'Delta';
 var OUTGOING = 'Outgoing';
 var INCOMING = 'Incoming';
 var ETYPE = 'Transfer';
-var EDGE_TYPE = 'edgetype';
+var EDGE_TYPE = 'edgeType';
 
 function createFilter(intersectionRule) {
-  return '<div class="center stage"><b>&sigma;:</b> type=' + intersectionRule.edgetype + '</div>';
+  return '<div class="center stage"><b>&sigma;:</b> type=' + intersectionRule.edgeType + '</div>';
 }
 
-function hasEdgetype(intersectionRules) {
+function hasEdgeType(intersectionRules) {
   for (var i = 0; i < intersectionRules.length; ++i) {
     if (intersectionRules[i].hasOwnProperty(EDGE_TYPE)) {
       return true;
@@ -50,19 +50,32 @@ function getDirectionSymbol(direction) {
   }
 }
 
+/*
 var DATA = {
   name: 'Q', // or dQ1 dQ2 dQ3
   variableOrdering: ['a', 'c', 'd', 'b'],
   sink: 'In-memory',
   stages: [
-    [{graphVersion: 'Current', variable: 'a', direction: OUTGOING, edgetype: ETYPE}],
+    [{graphVersion: 'Current', variable: 'a', direction: OUTGOING, edgeType: ETYPE}],
     [{graphVersion: 'Delta', variable: 'a', direction: INCOMING},
      {graphVersion: 'Current', variable: 'c', direction: OUTGOING}],
-    [{graphVersion: 'New', variable: 'a', direction: INCOMING, edgetype: ETYPE},
+    [{graphVersion: 'New', variable: 'a', direction: INCOMING, edgeType: ETYPE},
      {graphVersion: 'Current', variable: 'c', direction: OUTGOING},
-     {graphVersion: 'Current', variable: 'b', direction: OUTGOING, edgetype: ETYPE}]
+     {graphVersion: 'Current', variable: 'b', direction: OUTGOING, edgeType: ETYPE}]
   ]
 };
+*/
+var DATA = {
+  name: 'Q',
+  variableOrdering: ['a1', 'a2', 'a3'],
+  sink: 'InMemorySink',
+  stages: [
+    [{graphVersion: CURRENT_GRAPH, variable: 'a1', direction: OUTGOING, edgeType: ETYPE}],
+    [{graphVersion: CURRENT_GRAPH, variable: 'a1', direction: INCOMING, edgeType: ETYPE},
+     {graphVersion: CURRENT_GRAPH, variable: 'a2', direction: OUTGOING, edgeType: ETYPE}]
+  ]
+};
+
 
 var ordering = '<h3 class="center">GJ Variable Ordering: ' + DATA.variableOrdering.join(', ') + '</h3><br />';
 $('#ordering').append(ordering);
@@ -81,7 +94,7 @@ if (stages[0][0].hasOwnProperty(EDGE_TYPE)) {
 for (var i = 1; i < stages.length; ++i) {
   var intersectionRules = stages[i];
   var stageContainer = '<div class="center stage">';
-  if (hasEdgetype(intersectionRules)) {
+  if (hasEdgeType(intersectionRules)) {
     stageContainer += '<h3>Filter-And-Intersection</h3>';
   } else {
     stageContainer += '<h3>Intersection</h3>';
@@ -95,7 +108,7 @@ for (var i = 1; i < stages.length; ++i) {
     stageContainer += getGraphVersionBox(intersectionRules[j].graphVersion);
     stageContainer += getDirectionSymbol(intersectionRules[j].direction) + '<br />';
     if (intersectionRules[j].hasOwnProperty(EDGE_TYPE)) {
-      stageContainer += '<b>&sigma;:</b> type=' + intersectionRules[j].edgetype;
+      stageContainer += '<b>&sigma;:</b> type=' + intersectionRules[j].edgeType;
     }
     stageContainer += '</div>';
   }
