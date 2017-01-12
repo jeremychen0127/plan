@@ -3,16 +3,25 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
     <style>
       * { font-family: 'Crimson Text', serif; }
-      .center { text-align: center; margin: auto; width: 30%; } 
+      h3 { margin: 5px; }
+      .center { text-align: center; margin: auto; width: 100%; }
       .stage { border: 3px solid black; border-radius: 5px; margin-top: 10px; margin-bottom: 10px;
-               padding: 5px; }
-      .innerStage { width: 80%; border: 2px solid grey; }
+padding: 5px; width: 17%; }
+      .innerStage { width: 80%; border: 2px solid grey; margin-bottom: 5px; }
       .output { margin-left: 30px; width: 500px; text-align: left; }
       .arrow { width: 0; height: 0; border-left: 20px solid transparent;
                   border-right: 20px solid transparent;
                   border-bottom: 20px solid black; }
+      .graphVersionBox { display: inline; border: 2px solid; padding: 1px; }
+      .newGraph { border-color: red; color: red; }
+      .currentGraph { border-color: blue; color: blue; }
+      .deltaGraph { border-color: green; color: green; }
+      .legend { border: 3px solid black; float: right; height: 150px; width: 130px; margin: 5px; padding: 3px; }
+      .legendItem { border: 2px solid; padding: 1px; width: 10px; margin: 2px 0px 2px 5px; display: inline-block; }
+      .legendWords { display: inline; }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Crimson Text" rel="stylesheet">
 </head>
@@ -24,6 +33,26 @@
     </form>
     <br /><br />
     <div id="ordering"></div>
+    <div id="legend" class="legend">
+      <div>
+        <div class="graphVersionBox currentGraph legendItem">C</div>
+        <p class='legendWords'>: Current Graph</p>
+      </div>
+      <div>
+        <div class="graphVersionBox deltaGraph legendItem">&Delta;</div>
+        <p class='legendWords'>: Delta Graph</p>
+      </div>
+      <div>
+        <div class="newGraph legendItem">N</div>
+        <p class='legendWords'>: New Graph</p>
+      </div>
+      <div>
+        <div>------>: Outgoing</div>
+      </div>
+      <div>
+        <div><------: Incoming</div>
+      </div>
+    </div>
     <div id="stages"></div>
 
     <script type="text/javascript" src="plan.js"></script>
