@@ -65,7 +65,8 @@ var DATA = {
   ]
 };
 */
-var DATA = {
+var DATA_SET = [
+{
   name: 'Q',
   variableOrdering: ['a1', 'a2', 'a3'],
   sink: 'InMemorySink',
@@ -74,8 +75,9 @@ var DATA = {
     [{graphVersion: CURRENT_GRAPH, variable: 'a1', direction: INCOMING, edgeType: ETYPE},
      {graphVersion: CURRENT_GRAPH, variable: 'a2', direction: OUTGOING, edgeType: ETYPE}]
   ]
-};
+}];
 
+var DATA = DATA_SET[0];
 
 var name = '<h3 class="center">' + DATA.name + '</h3>';
 $('#name').append(name);
