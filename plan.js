@@ -7,11 +7,11 @@ var CURRENT_GRAPH = 'Current';
 var DELTA_GRAPH = 'Delta';
 var OUTGOING = 'Outgoing';
 var INCOMING = 'Incoming';
-var ETYPE = 'Transfer';
+var ETYPE = 'transfer';
 var EDGE_TYPE = 'edgeType';
 
 function createFilter(intersectionRule) {
-  return '<div class="center stage"><b>&sigma;:</b> type=' + intersectionRule.edgeType + '</div>';
+  return 
 }
 
 function hasEdgeType(intersectionRules) {
@@ -50,21 +50,6 @@ function getDirectionSymbol(direction) {
   }
 }
 
-/*
-var DATA = {
-  name: 'Q', // or dQ1 dQ2 dQ3
-  variableOrdering: ['a', 'c', 'd', 'b'],
-  sink: 'In-memory',
-  stages: [
-    [{graphVersion: 'Current', variable: 'a', direction: OUTGOING, edgeType: ETYPE}],
-    [{graphVersion: 'Delta', variable: 'a', direction: INCOMING},
-     {graphVersion: 'Current', variable: 'c', direction: OUTGOING}],
-    [{graphVersion: 'New', variable: 'a', direction: INCOMING, edgeType: ETYPE},
-     {graphVersion: 'Current', variable: 'c', direction: OUTGOING},
-     {graphVersion: 'Current', variable: 'b', direction: OUTGOING, edgeType: ETYPE}]
-  ]
-};
-*/
 var DATA_SET = [
 {
   name: 'Q',
@@ -77,12 +62,28 @@ var DATA_SET = [
   ]
 }];
 
+var stageSet = '';
+if (DATA_SET.length === 1) {
+  stageSet += '<div class="row">';
+  stageSet += '<div class="col s12">';
+  stageSet += '<div id="name1"></div>';
+  stageSet += '<div id="ordering1"></div>';
+  stageSet += '<div id="stages1"></div>';
+  stageSet += '</div></div>';
+
+  $("#stageSet").append(stageSet);
+} else {
+  stageSet += '<div class="row">';
+  for (var i = 0; i < DATA_SET.length; ++i) {
+  }
+}
+
 var DATA = DATA_SET[0];
 
 var name = '<h3 class="center">' + DATA.name + '</h3>';
-$('#name').append(name);
+$('#name1').append(name);
 var ordering = '<h3 class="center">GJ Variable Ordering: ' + DATA.variableOrdering.join(', ') + '</h3><br />';
-$('#ordering').append(ordering);
+$('#ordering1').append(ordering);
 
 var stages = DATA.stages;
 var stageContainers = [];
@@ -92,14 +93,15 @@ stage1Container += getGraphVersionBox(stages[0][0].graphVersion);
 stage1Container += getDirectionSymbol(stages[0][0].direction) + '</div>';
 stageContainers.push(stage1Container);
 if (stages[0][0].hasOwnProperty(EDGE_TYPE)) {
-  stageContainers.push(createFilter(stages[0][0]));
+  var stage1Filter = '<div class="center stage"><h3 style="margin-bottom: 0px">Filter</h3><b>&sigma;:</b> type=' + stages[0][0].edgeType + '</div>';
+  stageContainers.push(stage1Filter);
 }
 
-for (var i = 1; i < stages.length; ++i) {
+for (i = 1; i < stages.length; ++i) {
   var intersectionRules = stages[i];
   var stageContainer = '<div class="center stage">';
   if (hasEdgeType(intersectionRules)) {
-    stageContainer += '<h3>Filter-And-Intersection</h3>';
+    stageContainer += '<h3>Intersection-And-Filter</h3>';
   } else {
     stageContainer += '<h3>Intersection</h3>';
   }
@@ -122,17 +124,17 @@ for (var i = 1; i < stages.length; ++i) {
 }
 
 var sink = '<div class="center stage"><b>Sink:</b> ' + DATA.sink + '</div>';
-$('#stages').append(sink);
+$('#stages1').append(sink);
 var arrow = '<div class="center arrow"></div>';
 var arrowWithOutput = '<div class="center arrow"><div class="output">Output: <i>(';
 var orderingArrayCopy = DATA.variableOrdering.slice();
 for (i = stageContainers.length - 1; i >= 0; --i) {
   var finalOutput = arrowWithOutput + orderingArrayCopy.join(', ') + ')</i></div></div>';
   if (i != 0) {
-    $('#stages').append(finalOutput);
+    $('#stages1').append(finalOutput);
   } else {
-    $('#stages').append(arrow);
+    $('#stages1').append(arrow);
   }
   orderingArrayCopy.pop();
-  $('#stages').append(stageContainers[i]);
+  $('#stages1').append(stageContainers[i]);
 }
