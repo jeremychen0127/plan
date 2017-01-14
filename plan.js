@@ -54,14 +54,14 @@ function getColSize(numSets) {
   if (numSets === 1) {
     return 12;
   } else if (numSets === 3) {
-    return 3;
+    return /*ORIG 3*/'1.5';
   }
   if (numSets <= 4) {
     return 12 / numSets;
   }
 }
 
-var DATA_SET1 = [
+var DATA_SET = [
 {
   name: 'Q',
   variableOrdering: ['a1', 'a2', 'a3'],
@@ -73,7 +73,7 @@ var DATA_SET1 = [
   ]
 }];
 
-var DATA_SET = [
+var DATA_SET1 = [
 {
   name: 'dQ1',
   variableOrdering: ['a1', 'a2', 'a3'],
@@ -112,7 +112,8 @@ $("#stageSet").append(stageSet);
 var colSize = getColSize(DATA_SET.length);
 for (var k = 0; k < DATA_SET.length; ++k) {
   stageSet = '';
-  stageSet += '<div class="col s' + colSize + '">';
+  //ORIG stageSet += '<div class="col s' + colSize + '">';
+  stageSet += '<div class="col s' + colSize + (k === 0 && DATA_SET.length > 1 ? ' offset-s3' : '') + '">';
   stageSet += '<div id="name' + k + '"></div>';
   stageSet += '<div id="ordering' + k + '"></div>';
   stageSet += '<div id="stages' + k + '"></div>';
@@ -124,7 +125,7 @@ for (var k = 0; k < DATA_SET.length; ++k) {
 function createPlan(DATA, id) {
   var name = '<h3 class="center">' + DATA.name + '</h3>';
   $('#name' + id).append(name);
-  var ordering = '<h3 class="center">GJ Variable Ordering: ' + DATA.variableOrdering.join(', ') + '</h3><br />';
+  var ordering = '<h3 class="center">GJ Variable Ordering:<br />' + DATA.variableOrdering.join(', ') + '</h3>';
   $('#ordering' + id).append(ordering);
 
   var stages = DATA.stages;
@@ -168,7 +169,8 @@ function createPlan(DATA, id) {
   var sink = '<div class="center stage"><b>Sink:</b> ' + DATA.sink + '</div>';
   $('#stages' + id).append(sink);
   var arrow = '<div class="center arrow"></div>';
-  var arrowWithOutput = '<div class="center arrow"><div class="output">Output: <i>(';
+  // ORIG: var arrowWithOutput = '<div class="center arrow"><div class="output">Output: <i>(';
+  var arrowWithOutput = '<div class="center arrow"><div class="output"><i>(';
   var orderingArrayCopy = DATA.variableOrdering.slice();
   for (i = stageContainers.length - 1; i >= 0; --i) {
     var finalOutput = arrowWithOutput + orderingArrayCopy.join(', ') + ')</i></div></div>';
