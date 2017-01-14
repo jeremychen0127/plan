@@ -125,7 +125,7 @@ for (var k = 0; k < DATA_SET.length; ++k) {
 function createPlan(DATA, id) {
   var name = '<h3 class="center">' + DATA.name + '</h3>';
   $('#name' + id).append(name);
-  var ordering = '<h3 class="center">GJ Variable Ordering:<br />' + DATA.variableOrdering.join(', ') + '</h3>';
+  var ordering = '<h3 class="center">Variable Ordering:<br />' + DATA.variableOrdering.join(', ') + '</h3>';
   $('#ordering' + id).append(ordering);
 
   var stages = DATA.stages;
