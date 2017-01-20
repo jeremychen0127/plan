@@ -1,44 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Compiled and minified CSS -->
+    <!-- Materialize UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Underscore.js (javascript array/object/etc. help functions ) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-
-    <style>
-      * { font-family: 'Crimson Text', serif; box-sizing: initial; }
-      h3 { margin: 5px; font-size: 1.17em; font-weight: bold; }
-      textarea { width: 30%; }
-      .center { text-align: center; margin: auto; width: 100%; }
-      .stage { border: 3px solid black; border-radius: 5px; margin-top: 10px; margin-bottom: 10px;
-padding: 5px; width: /*ORIG: 220*/150px; }
-      .innerStage { width: 80%; border: 2px solid grey; margin-bottom: 5px; }
-      .output { margin-left: /*ORIG: 30*/18px; width: 500px; text-align: left; }
-      .arrow { width: 0; height: 0; border-left: 20px solid transparent;
-                  border-right: 20px solid transparent;
-                  border-bottom: 20px solid black; }
-      .graphVersionBox { display: inline; border: 2px solid; padding: 1px; }
-      .newGraph { border-color: red; color: red; }
-      .currentGraph { border-color: blue; color: blue; }
-      .deltaGraph { border-color: green; color: green; }
-      .legend { border: 3px solid black; height: /*100*/160px; width: /*300*/130px; margin: 5px; padding: 3px;
-                z-index: 10; position: absolute; right: 5px; top: /*0*/20%; }
-      .legendItem { border: 2px solid; padding: 1px; width: 10px; margin: 2px 0px 2px 5px; display: inline-block; }
-      .legendWords { display: inline; }
-      .simpleLegendEntry { /*margin-top: 5px;*/ margin-left: 8px; }
-      .legendRow { margin-bottom: 0px; }
-      /*ORIG: */.row .col { padding: 0px; }
-    </style>
+    <!-- Custom css file -->
+    <link href="planViewer.css" rel="stylesheet">
+    <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Crimson Text" rel="stylesheet">
 </head>
 
 <body>
-    <form class="center">
-      <textarea></textarea>
-      <input type="submit" value="Submit Query"></input>
-    </form>
+    <div class="center">
+      <textarea id="query" style="margin-bottom: -10px; margin-top: 5px;"></textarea>
+      <input type="submit" value="Submit Query" onclick="submitQuery()"></input>
+    </div>
     <br /><br />
     <div id="legend" class="legend" style="display: none">
       <div class="row legendRow">

@@ -1,0 +1,105 @@
+* {
+  font-family: 'Crimson Text', serif; 
+  box-sizing: initial;
+}
+
+h3 {
+  margin: 5px 0px 10px 0px;
+  font-size: 1.17em;
+  font-weight: bold;
+}
+
+textarea {
+  width: 50%;
+}
+
+.center {
+  text-align: center;
+  margin: auto;
+  width: 100%;
+}
+
+.stage {
+  border: 3px solid black;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: /*150*/220px;
+}
+
+.innerStage {
+  width: 80%;
+  border: 2px solid grey;
+  margin-bottom: 5px;
+}
+
+.output {
+  margin-left: /*18*/30px;
+  width: 500px;
+  text-align: left;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid black;
+}
+
+.graphVersionBox {
+  display: inline;
+  border: 2px solid;
+  padding: 1px;
+}
+
+.newGraph {
+  border-color: red;
+  color: red;
+}
+
+.currentGraph {
+  border-color: blue;
+  color: blue;
+}
+
+.deltaGraph {
+  border-color: green;
+  color: green;
+}
+
+.legend {
+  border: 3px solid black;
+  height: /*100*/160px;
+  width: /*300*/130px;
+  margin: 5px;
+  padding: 3px;
+  z-index: 10;
+  position: absolute;
+  right: 5px;
+  top: /*0*/20%;
+}
+
+.legendItem {
+  border: 2px solid;
+  padding: 1px;
+  width: 10px;
+  margin: 2px 0px 2px 5px;
+  display: inline-block;
+}
+
+.legendWords {
+  display: inline;
+}
+
+.simpleLegendEntry {
+  /*margin-top: 5px;*/ 
+  margin-left: 8px;
+}
+
+.legendRow {
+  margin-bottom: 0px;
+}
+
+/*.row .col { padding: 3px; } */

@@ -1,6 +1,13 @@
-$.getJSON("http://localhost:8000", function(data, status, xhr) {
-  document.write(data);
-});
+var query;
+function submitQuery() {
+  $("#stageSet").empty();
+  query = document.getElementById("query").value.trim();
+  $.post("http://localhost:8000/query", query);
+  document.getElementById("query").value = "";
+  $.getJSON("http://localhost:8000/json", function(data, status, xhr) {
+    createPlan(data);
+  });
+}
 
 var NEW_GRAPH = 'New';
 var CURRENT_GRAPH = 'Current';
@@ -9,10 +16,6 @@ var OUTGOING = 'Outgoing';
 var INCOMING = 'Incoming';
 var ETYPE = 'transfer';
 var EDGE_TYPE = 'edgeType';
-
-function createFilter(intersectionRule) {
-  return 
-}
 
 function hasEdgeType(intersectionRules) {
   for (var i = 0; i < intersectionRules.length; ++i) {
@@ -54,13 +57,14 @@ function getColSize(numSets) {
   if (numSets === 1) {
     return 12;
   } else if (numSets === 3) {
-    return /*ORIG 3*/'1.5';
+    return 3;
   }
   if (numSets <= 4) {
     return 12 / numSets;
   }
 }
 
+/*
 var DATA_SET = [
 {
   name: 'Q',
@@ -104,25 +108,28 @@ var DATA_SET1 = [
      {graphVersion: NEW_GRAPH, variable: 'a1', direction: OUTGOING, edgeType: ETYPE}]
   ]
 }];
+*/
 
-var stageSet = '';
-stageSet += '<div class="row" id="planContainer"></div>';
-$("#stageSet").append(stageSet);
-
-var colSize = getColSize(DATA_SET.length);
-for (var k = 0; k < DATA_SET.length; ++k) {
-  stageSet = '';
-  //ORIG stageSet += '<div class="col s' + colSize + '">';
-  stageSet += '<div class="col s' + colSize + (k === 0 && DATA_SET.length > 1 ? ' offset-s3' : '') + '">';
-  stageSet += '<div id="name' + k + '"></div>';
-  stageSet += '<div id="ordering' + k + '"></div>';
-  stageSet += '<div id="stages' + k + '"></div>';
-  stageSet += '</div>';
-  $("#planContainer").append(stageSet);
-  createPlan(DATA_SET[k], k);
+function createPlan(DATA_SET) {
+  var stageSet = '';
+  stageSet += '<div class="row" id="planContainer"></div>';
+  $("#stageSet").append(stageSet);
+  
+  var colSize = getColSize(DATA_SET.length);
+  for (var k = 0; k < DATA_SET.length; ++k) {
+    stageSet = '';
+    stageSet += '<div class="col s' + colSize + '">';
+    //stageSet += '<div class="col s' + colSize + (k === 0 && DATA_SET.length > 1 ? ' offset-s3' : '') + '">';
+    stageSet += '<div id="name' + k + '"></div>';
+    stageSet += '<div id="ordering' + k + '"></div>';
+    stageSet += '<div id="stages' + k + '"></div>';
+    stageSet += '</div>';
+    $("#planContainer").append(stageSet);
+    createPlanStage(DATA_SET[k], k);
+  }
 }
 
-function createPlan(DATA, id) {
+function createPlanStage(DATA, id) {
   var name = '<h3 class="center">' + DATA.name + '</h3>';
   $('#name' + id).append(name);
   var ordering = '<h3 class="center">Variable Ordering:<br />' + DATA.variableOrdering.join(', ') + '</h3>';
@@ -169,8 +176,8 @@ function createPlan(DATA, id) {
   var sink = '<div class="center stage"><b>Sink:</b> ' + DATA.sink + '</div>';
   $('#stages' + id).append(sink);
   var arrow = '<div class="center arrow"></div>';
-  // ORIG: var arrowWithOutput = '<div class="center arrow"><div class="output">Output: <i>(';
-  var arrowWithOutput = '<div class="center arrow"><div class="output"><i>(';
+  var arrowWithOutput = '<div class="center arrow"><div class="output">Output: <i>(';
+  //var arrowWithOutput = '<div class="center arrow"><div class="output"><i>(';
   var orderingArrayCopy = DATA.variableOrdering.slice();
   for (i = stageContainers.length - 1; i >= 0; --i) {
     var finalOutput = arrowWithOutput + orderingArrayCopy.join(', ') + ')</i></div></div>';
